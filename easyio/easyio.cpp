@@ -27,7 +27,7 @@ void PrintOut::screen(vector<string> myVector, string separator){
 
 vector<vector<string> > FileManip::read(string filename, string separator){
 	//----- Reads in a file and converts to a vector matrix of strings -----//
- 	
+
 	if (separator==STRING_UNINITIALIZED){
 		// Determine the type of file and infer the separator
 		vector<string> divided = divide(filename,".");
@@ -45,22 +45,22 @@ vector<vector<string> > FileManip::read(string filename, string separator){
 
 
 	ifstream file(filename.c_str());
-    if (!file.is_open()) printf("Failed to open file %s.\n", filename.c_str());
-    string value;
-    vector<vector<string> > filematrix;
+	if (!file.is_open()) printf("Failed to open file %s.\n", filename.c_str());
+	string value;
+	vector<vector<string> > filematrix;
 
-    while (file.good()){
-        getline(file,value);
-        istringstream iss(value);
-        string word;
-        vector<string> line;
+	while (file.good()){
+		getline(file,value);
+		istringstream iss(value);
+		string word;
+		vector<string> line;
 		while (getline(iss,word,*separator.c_str())){
-            line.push_back(word);
-        }
-        if (line.size()) filematrix.push_back(line);
-    }
-    file.close();
-    return filematrix;
+			line.push_back(word);
+		}
+		if (line.size()) filematrix.push_back(line);
+	}
+	file.close();
+	return filematrix;
 }
 
 double DataManip::stringToDouble(string s){
@@ -111,98 +111,55 @@ vector<vector<double> > DataManip::getColumns(vector<vector<double> > doubleVect
 }
 
 void PrintOut::toFile(vector<vector<double> > myVector, string fileName, string separator){
-    ofstream file;
-    file.open(fileName.c_str());
-    if (file.is_open()){
+	ofstream file;
+	file.open(fileName.c_str());
+	if (file.is_open()){
 		for (int i=0; i<myVector.size(); i++){
 			for (int j=0; j<myVector[i].size(); j++){
 				//printf("%f%s",myVector[i][j],separator.c_str());
 				file << myVector[i][j] << separator;
-            }
-            //printf("\n");
-            file << "\n";
-        }
-        file.close();
-    }
-    else {
+			}
+			//printf("\n");
+			file << "\n";
+		}
+		file.close();
+	}
+	else {
 		printf("Failed to open %s.",fileName.c_str());
-    }
+	}
+}
+
+void PrintOut::toFile(vector<vector<vector<double> > > myVector, string fileName, string separator){
+	ofstream file;
+	file.open(fileName.c_str());
+	if (file.is_open()){
+		for (int i=0; i<myVector.size(); i++){
+			for (int j=0; j<myVector[i].size(); j++){
+				for (int k=0; k<myVector[i][j].size(); k++){
+					//printf("%f%s",myVector[i][j],separator.c_str());
+					file << myVector[i][j][k] << separator;
+				}
+			}
+			//printf("\n");
+			file << "\n";
+		}
+		file.close();
+	}
+	else {
+		printf("Failed to open %s.",fileName.c_str());
+	}
 }
 
 void PrintOut::toFile(vector<double> myVector, string fileName, string separator){
-    ofstream file;
-    file.open(fileName.c_str());
-    if (file.is_open()){
+	ofstream file;
+	file.open(fileName.c_str());
+	if (file.is_open()){
 		for (int i=0; i<myVector.size(); i++){
 			file << myVector[i] << separator;
-        }
-        file.close();
-    }
-    else {
+		}
+		file.close();
+	}
+	else {
 		printf("Failed to open %s.",fileName.c_str());
-    }
+	}
 }
-
-
-////// begin old file
-/*
-string ftos(double f){
-	string s;
-	stringstream ss;
-	ss << f;
-	ss >> s;
-	return s;
-}
-
-string itos(int i){
-	string s;
-	stringstream ss;
-	ss << i;
-	ss >> s;
-	return s;
-}
-
-
-void prints(double * array_first, int dim1, int dim2, std::string label){
-    /*------------------------------------------------------------------------------------------*
-    |   "Print Array": Takes in address of first element of 2D array and prints out, labeled    |
-    *------------------------------------------------------------------------------------------*/
-/*
-    printf("Showing %s:\n\n", label.c_str());
-    for (int i=0; i<dim1; i++){
-        for (int j=0; j<dim2; j++){
-            printf("%f, ", array_first[i*dim1+j]);
-        }
-        printf("\n");
-    }
-    printf("\n\n");
-}
-
-void prints(double * array_first, int dim1, std::string label){
-    /*------------------------------------------------------------------------------------------*
-    |   "Print Array": Takes in address of first element of 1D array and prints out, labeled    |
-    *------------------------------------------------------------------------------------------*/
-/*
-    printf("Showing %s:\n\n", label.c_str());
-    for (int i=0; i<dim1; i++){
-        printf("%f, ", array_first[i]);
-    }
-    printf("\n\n");
-}
-
-
-void wait_for_key(){
-    printf("\nPress ENTER to continue...\n");
-    cin.clear();
-    cin.ignore(cin.rdbuf()->in_avail());
-    cin.get();
-    return;
-}
-
-void wait_for_key_silently(){
-    printf("\n");
-    cin.clear();
-    cin.ignore(cin.rdbuf()->in_avail());
-    cin.get();
-    return;
-}*/
